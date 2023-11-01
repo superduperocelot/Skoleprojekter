@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hunting Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Velkommen til Hunting Simulator.</h1>
+    <p>Spillet går ud på at skyde bjørne, sparke alligatorer, og løbe fra skatteopkrævere. Skriv Bang hvis der kommer en bjørn, Spark hvis der kommer en alligator, og Løb hvis der kommer en skatteopkræver.</p>
+    <button onclick="start()">Start</button>
+    <p id="Game"></p>
+    <input type="text" id="inp" name="inp"><br><br>
+    <script>
+        lastOne = ""
+        function update(){
+            if(running){
+                n = Math.random()
+                
+                if(lastOne == "Bjørn" && document.getElementById("inp").value != "Bang"){
+                    running = false
+                    document.getElementById("Game").textContent = "Du blev spist af en bjørn.\nDu skød " + B + " bjørne, sparkede " + A + " alligatorer, og undgik loven " + S + " gange."
+                    return
+                }
+                if(lastOne == "Alligator" && document.getElementById("inp").value != "Spark"){
+                    running = false
+                    document.getElementById("Game").textContent = "Du blev spist af en alligator.\nDu skød " + B + " bjørne, sparkede " + A + " alligatorer, og undgik loven " + S + " gange."
+                    return
+                }
+                if(lastOne == "Skatteopkræver" && document.getElementById("inp").value != "Løb"){
+                    running = false
+                    document.getElementById("Game").textContent = "Du betalte alle dine penge til skat.\nDu skød " + B + " bjørne, sparkede " + A + " alligatorer, og undgik loven " + S + " gange."
+                    return
+                }
+
+                if(lastOne == "Bjørn" && document.getElementById("inp").value == "Bang"){
+                    B += 1
+                }
+                if(lastOne == "Alligator" && document.getElementById("inp").value == "Spark"){
+                    A += 1
+                }
+                if(lastOne == "Skatteopkræver" && document.getElementById("inp").value == "Løb"){
+                    S += 1
+                }
+                    
+
+                if(n < 0.33){
+                    console.log('1')
+                    document.getElementById("Game").textContent = "Bjørn";
+                    lastOne = "Bjørn"
+                    n = 1
+                }
+                if(n < 0.66){
+                    console.log('2')
+                    
+                    document.getElementById("Game").textContent = "Alligator";
+                    lastOne = "Alligator"
+                    n = 1
+                }
+                if(n < 1){
+                    console.log('3')
+                    document.getElementById("Game").textContent = "Skatteopkræver";
+                    lastOne = "Skatteopkræver"
+                    n = 1
+                }
+            }
+            
+                
+        }
+        function start(){
+            running = true
+            B = 0
+            A = 0
+            S = 0
+                setInterval(update, 3000);
+        }
+        
+    </script>
+</body>
+</html>
